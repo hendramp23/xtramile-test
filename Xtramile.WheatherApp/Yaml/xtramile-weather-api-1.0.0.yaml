@@ -1,0 +1,191 @@
+openapi: 3.0.3
+info:
+  title: Xtramile - Weather Api
+  version: 1.0.0
+paths:
+  /v1/Weather/countries:    
+    get:
+      description: Get all country list
+      tags:
+        - Weather
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/countryModel'
+        '400':
+          description: When validation not matched i.e mandatory fields validation, invalid title
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorModel'
+        '401':
+          description: Api key is not provided or incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiUnauthorizeErrorModel'
+        '500':
+          description: Exception thrown
+  /v1/Weather/countries/{id}/cities:    
+    get:
+      description: Get all country list
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Country id"
+        required: true
+        schema:
+          type: string
+          example: IDN
+      tags:
+        - Weather
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/cityModel'
+        '400':
+          description: When validation not matched i.e mandatory fields validation, invalid title
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorModel'
+        '401':
+          description: Api key is not provided or incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiUnauthorizeErrorModel'
+        '500':
+          description: Exception thrown
+  /v1/Weather/cities/{id}/data:    
+    get:
+      description: Get weather data for selected city
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "City id"
+        required: true
+        schema:
+          type: string
+          example: DPS
+      tags:
+        - Weather
+      responses:
+        '200':
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/weatherModel'
+        '400':
+          description: When validation not matched i.e mandatory fields validation, invalid title
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiErrorModel'
+        '401':
+          description: Api key is not provided or incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/apiUnauthorizeErrorModel'
+        '500':
+          description: Exception thrown
+components:
+  schemas:
+    countryModel:
+      type: object
+      properties:
+        Id:
+          maxLength: 3
+          type: string
+          example: IDN
+        Name:
+          maxLength: 500
+          type: string
+          example: Indonesia
+      additionalProperties: false
+    cityModel:
+      type: object
+      properties:
+        Id:
+          maxLength: 3
+          type: string
+          example: DPS
+        Name:
+          maxLength: 500
+          type: string
+          example: Denpasar
+      additionalProperties: false
+    weatherModel:
+      type: object
+      properties:
+        name:
+          maxLength: 100
+          type: string
+          example: Denpasar
+        location:
+          maxLength: 3
+          type: string
+          example: "Lon: 115.2167, Lat:-8.65"
+        time:
+          maxLength: 500
+          type: string
+          example: GMT+8 
+        wind:
+          maxLength: 500
+          type: string
+          example: "speed: 6.17, deg: 130, gust:-"
+        visibility:
+          type: number
+          example: 10000
+        skyConditions:
+          maxLength: 500
+          type: string
+          example: Clouds
+        temperatureInCelcius:
+          type: string
+          format: decimal
+          example: 37.99
+        temperatureInFahrenheit:
+          type: string
+          format: decimal
+          example: 297.99
+        dewPoint:
+          type: number
+          example: 61
+        relativeHumidity:
+          type: number
+          example: 61
+        preasure:
+          type: number
+          example: 1000
+      additionalProperties: false
+    apiErrorModel:
+      type: object
+      properties:
+          errorMessages:
+            type: array
+            items:
+                type: string
+                example: Title is Invalid
+      additionalProperties: false
+    apiUnauthorizeErrorModel:
+      type: object
+      properties:
+          errorMessages:
+            type: array
+            items:
+                type: string
+                example: Token is not provided or incorrect.
+      additionalProperties: false
