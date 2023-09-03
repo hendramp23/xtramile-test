@@ -2,6 +2,11 @@ import { Form, Col, Row } from 'react-bootstrap';
 
 export default function WeatherView ({data}) {
 
+    const convertShiiftTimeUtc = (time) => {
+        var d = new Date((new Date().getTime())-time*1000)
+        return d.toISOString();
+    }
+
     if(!data.showData){
         return <p>No Data To Display</p>
     }
@@ -31,12 +36,12 @@ export default function WeatherView ({data}) {
                     Time
                 </Form.Label>
                 <Col sm="10">
-                <Form.Control plaintext readOnly defaultValue={content.time} />
+                <Form.Control plaintext readOnly defaultValue={convertShiiftTimeUtc(content.time)} />
                 </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
-                    Wind
+                    Wind(meter/sec)
                 </Form.Label>
                 <Col sm="10">
                 <Form.Control plaintext readOnly defaultValue={content.wind} />
@@ -44,7 +49,7 @@ export default function WeatherView ({data}) {
             </Form.Group>
             <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
-                    Visibility
+                    Visibility (meter)
                 </Form.Label>
                 <Col sm="10">
                 <Form.Control plaintext readOnly defaultValue={content.visibility} />
@@ -84,7 +89,7 @@ export default function WeatherView ({data}) {
             </Form.Group>
             <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
-                    Relative Humidity
+                    Relative Humidity (%)
                 </Form.Label>
                 <Col sm="10">
                 <Form.Control plaintext readOnly defaultValue={content.humidity} />

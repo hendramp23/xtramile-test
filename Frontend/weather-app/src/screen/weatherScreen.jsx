@@ -4,6 +4,7 @@ import WeatherService from '../api/weather-service';
 import WeatherForm from '../components/WeatherForm';
 
 export default function WeatherScreen(){
+    const [showError, setShowError] = useState(false);
     const [countries, setCountries] = useState([]);
     const [cities, setCities] = useState([]);
     const [weatherData, setWeatherData] = useState({
@@ -50,6 +51,9 @@ export default function WeatherScreen(){
             });
 
             setCities(citySelectList);
+        })
+        .catch((err) => {
+            
         });
     }
 
@@ -79,6 +83,10 @@ export default function WeatherScreen(){
     if(isLoading)
     {
         return <p>loading.... </p>
+    }
+
+    if(showError){
+        <p>an error occurs, please refresh page and retry...</p>
     }
 
     return(

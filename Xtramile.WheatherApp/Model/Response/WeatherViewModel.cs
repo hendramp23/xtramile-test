@@ -17,9 +17,9 @@
 
         public string SkyCondition { get; set; }
 
-        public decimal TemperatureCelcius { get; set; }
+        public string TemperatureCelcius { get; set; }
 
-        public decimal TemperatureFahrenheit { get; set; }
+        public string TemperatureFahrenheit { get; set; }
 
         public int DewPoint { get; set; }
 

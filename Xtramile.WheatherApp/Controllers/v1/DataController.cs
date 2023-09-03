@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Xtramile.WheatherApp.Dto;
@@ -86,8 +87,8 @@ namespace Xtramile.WheatherApp.Controllers.v1
                 Location = data.Location,
                 Pressure = data.Pressure,
                 SkyCondition = data.SkyCondition,
-                TemperatureCelcius = data.TemperatureCelcius,
-                TemperatureFahrenheit = data.TemperatureFahrenheit, 
+                TemperatureCelcius = String.Format("{0:0.00}", data.TemperatureCelcius),
+                TemperatureFahrenheit = String.Format("{0:0.00}", data.TemperatureFahrenheit),
                 Time = data.Time,
                 Visibility = data.Visibility,
                 Wind = data.Wind,
